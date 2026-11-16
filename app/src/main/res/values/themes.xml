@@ -1,16 +1,17 @@
 <resources>
     <!-- Base application theme. -->
+        <!-- Base application theme. -->
     <style name="Theme.SagerNet" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Solid</item>
         <item name="actionModeCloseDrawable">@drawable/ic_navigation_close</item>
         <item name="colorButtonNormal">?colorAccent</item>
         <item name="android:navigationBarColor">?colorPrimaryDark</item>
-        <item name="colorPrimary">@color/material_pink_500</item>
-        <item name="colorPrimaryDark">@color/material_pink_700</item>
-        <item name="colorAccent">@color/material_pink_accent_200</item>
+        <item name="colorPrimary">@color/medusa_crimson</item>
+        <item name="colorPrimaryDark">@color/medusa_crimson_dark</item>
+        <item name="colorAccent">@color/medusa_gold</item>
 
-        <item name="colorMaterial100">@color/material_pink_100</item>
-        <item name="colorMaterial300">@color/material_pink_300</item>
+        <item name="colorMaterial100">@color/medusa_crimson_light</item>
+        <item name="colorMaterial300">@color/medusa_celestial_purple</item>
 
         <item name="accentOrTextSecondary">?colorAccent</item>
         <item name="accentOrTextPrimary">?colorAccent</item>
@@ -22,10 +23,9 @@
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="tabTextColor">#99FFFFFF</item>
         <item name="tabSelectedTextColor">@color/white</item>
-        <item name="tabIndicatorColor">@color/white</item>
-        <item name="tabRippleColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/medusa_gold</item>
+        <item name="tabRippleColor">@color/medusa_gold</item>
         <item name="whiteOrTextPrimary">@color/white</item>
-
         <item name="windowActionModeOverlay">true</item>
 
         <!-- Remove ActionBar but keep styles and themes -->
@@ -132,12 +132,12 @@
         <item name="rippleColor">@color/chip_ripple_color</item>
     </style>
 
-    <style name="Theme.SagerNet.Pink_SSR">
-        <item name="colorPrimary">@color/color_pink_ssr</item>
-        <item name="colorPrimaryDark">@color/color_pink_ssr</item>
-        <item name="colorAccent">@color/material_pink_accent_200</item>
-        <item name="colorMaterial100">@color/material_pink_accent_100</item>
-        <item name="colorMaterial300">@color/color_pink_ssr</item>
+        <style name="Theme.SagerNet.Dialog.Pink_SSR">
+        <item name="colorPrimary">@color/medusa_crimson</item>
+        <item name="colorPrimaryDark">@color/medusa_crimson_dark</item>
+        <item name="colorAccent">@color/medusa_gold</item>
+        <item name="colorMaterial100">@color/medusa_crimson_light</item>
+        <item name="colorMaterial300">@color/medusa_celestial_purple</item>
     </style>
 
     <style name="Theme.SagerNet.Amber">
