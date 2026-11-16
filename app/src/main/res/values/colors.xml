@@ -281,12 +281,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="fab_color_progress">@color/material_light_black</color>
+    <color name="fab_color_progress">@color/medusa_gold</color>
 
-    <color name="color_pink_ssr">#fb7299</color>
+    <!-- Queen Medusa (Cai Lin) Palette -->
+    <color name="medusa_crimson">#9E1B24</color>
+    <color name="medusa_crimson_dark">#6E0F16</color>
+    <color name="medusa_crimson_light">#F5D6D8</color>
+    <color name="medusa_crimson_mid">#C84B54</color>
+    <color name="medusa_gold">#D4AF37</color>
+    <color name="medusa_celestial_purple">#6B3FA0</color>
 
-    <color name="color_ng_black_accent">#9E9E9E</color>
-    <color name="color_ng_black_primary">#2B2B2B</color>
+    <color name="color_pink_ssr">#9E1B24</color>
+
+    <color name="color_ng_black_accent">#D4AF37</color>
+    <color name="color_ng_black_primary">#1E1226</color>
 
     <color name="preference_simple_menu_background">#FAFAFA</color>
 
