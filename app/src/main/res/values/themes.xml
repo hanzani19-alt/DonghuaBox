@@ -474,8 +474,10 @@
 
     <style name="Theme.Start" parent="Theme.MaterialComponents.DayNight">
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorPrimary">@color/btth_primary</item>
+        <item name="colorPrimaryDark">@color/btth_primary_dark</item>
+        <item name="colorAccent">@color/btth_jade_accent</item>
+        <item name="colorSecondary">@color/btth_jade_accent</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

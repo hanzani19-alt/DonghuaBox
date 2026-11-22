@@ -18,3 +18,11 @@ jniLibs/
 
 # submodules
 /external
+
+# DonghuaBox signing files
+/donghuabox-release.keystore
+/donghuabox-keystore.b64
+
+/donghuabox-release-v2.keystore
+
+/release.keystore
