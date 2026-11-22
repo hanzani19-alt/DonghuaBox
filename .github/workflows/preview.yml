@@ -36,6 +36,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Golang Status
         run: find buildScript libcore/*.sh | xargs cat | sha1sum > golang_status
       - name: Libcore Status
@@ -51,15 +56,62 @@ jobs:
         with:
           path: ~/.gradle
           key: gradle-oss-${{ hashFiles('**/*.gradle.kts') }}
+      - name: Configure Maven Mirror
+        run: |
+          mkdir -p ~/.gradle/init.d
+          cat << 'EOF' > ~/.gradle/init.d/mirror.gradle.kts
+          allprojects {
+              repositories {
+                  all {
+                      if (this is MavenArtifactRepository) {
+                          val u = this.url.toString()
+                          if (u.startsWith("https://repo.maven.apache.org/maven2") || u.startsWith("https://repo1.maven.org/maven2")) {
+                              setUrl("https://maven-central.storage-download.googleapis.com/maven2/")
+                          }
+                      }
+                  }
+              }
+          }
+          beforeSettings {
+              pluginManagement {
+                  repositories {
+                      all {
+                          if (this is MavenArtifactRepository) {
+                              val u = this.url.toString()
+                              if (u.startsWith("https://repo.maven.apache.org/maven2") || u.startsWith("https://repo1.maven.org/maven2")) {
+                                  setUrl("https://maven-central.storage-download.googleapis.com/maven2/")
+                              }
+                          }
+                      }
+                  }
+              }
+              dependencyResolutionManagement {
+                  repositories {
+                      all {
+                          if (this is MavenArtifactRepository) {
+                              val u = this.url.toString()
+                              if (u.startsWith("https://repo.maven.apache.org/maven2") || u.startsWith("https://repo1.maven.org/maven2")) {
+                                  setUrl("https://maven-central.storage-download.googleapis.com/maven2/")
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+          EOF
       - name: Gradle Build
         env:
           BUILD_PLUGIN: none
         run: |
           echo "sdk.dir=${ANDROID_HOME}" > local.properties
-          echo "ndk.dir=${ANDROID_HOME}/ndk/25.0.8775105" >> local.properties
-          export LOCAL_PROPERTIES="${{ secrets.LOCAL_PROPERTIES }}"
+          NDK_PATH=$(ls -d ${ANDROID_HOME}/ndk/* 2>/dev/null | tail -n 1)
+          if [ -z "$NDK_PATH" ]; then
+            yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "ndk;25.2.9519653"
+            NDK_PATH="${ANDROID_HOME}/ndk/25.2.9519653"
+          fi
+          echo "ndk.dir=${NDK_PATH}" >> local.properties
           ./run init action gradle
-          ./gradlew app:assemblePreviewRelease
+          ./gradlew app:assemblePreviewDebug --max-workers=2
           APK=$(find app/build/outputs/apk -name '*arm64-v8a*.apk')
           APK=$(dirname $APK)
           echo "APK=$APK" >> $GITHUB_ENV
@@ -67,3 +119,4 @@ jobs:
         with:
           name: APKs
           path: ${{ env.APK }}
+          
