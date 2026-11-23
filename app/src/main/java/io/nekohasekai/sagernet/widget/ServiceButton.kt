@@ -64,7 +64,7 @@ class ServiceButton @JvmOverloads constructor(
     ) {
         when (state) {
             BaseService.State.Connecting -> {
-                setImageResource(R.drawable.ic_qinglin_eye_connecting)
+                setImageResource(R.drawable.ic_qinglin_connecting)
                 hideProgress()
                 delayedAnimation =
                     (context as LifecycleOwner).lifecycleScope.launchWhenStarted {
@@ -79,18 +79,18 @@ class ServiceButton @JvmOverloads constructor(
             }
 
             BaseService.State.Connected -> {
-                setImageResource(R.drawable.ic_qinglin_eye_on)
+                setImageResource(R.drawable.ic_qinglin_on)
                 delayedAnimation?.cancel()
                 progress.setProgressCompat(1, true)
             }
 
             BaseService.State.Stopping -> {
-                setImageResource(R.drawable.ic_qinglin_eye_connecting)
+                setImageResource(R.drawable.ic_qinglin_stopping)
                 hideProgress()
             }
 
             else -> {
-                setImageResource(R.drawable.ic_qinglin_eye_off)
+                setImageResource(R.drawable.ic_qinglin_off)
                 hideProgress()
             }
         }

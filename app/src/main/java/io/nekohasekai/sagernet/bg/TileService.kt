@@ -13,15 +13,19 @@ import android.service.quicksettings.TileService as BaseTileService
 class TileService : BaseTileService(), SagerConnection.Callback {
 
     private val iconIdle by lazy {
-        Icon.createWithResource(this, R.drawable.ic_qinglin_eye_off)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_off)
     }
 
     private val iconBusy by lazy {
-        Icon.createWithResource(this, R.drawable.ic_qinglin_eye_connecting)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_connecting)
     }
 
     private val iconConnected by lazy {
-        Icon.createWithResource(this, R.drawable.ic_qinglin_eye_on)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_on)
+    }
+
+    private val iconStopping by lazy {
+        Icon.createWithResource(this, R.drawable.ic_qinglin_stopping)
     }
 
     private var tapPending = false
@@ -66,34 +70,36 @@ class TileService : BaseTileService(), SagerConnection.Callback {
         profileName: String?
     ) {
         qsTile?.apply {
-            label = null
+            label = getString(R.string.app_name)
 
             when (serviceState) {
                 BaseService.State.Idle -> error("serviceState")
 
                 BaseService.State.Connecting -> {
+                    label = "CONNECTING"
                     icon = iconBusy
                     state = Tile.STATE_ACTIVE
                 }
 
                 BaseService.State.Connected -> {
+                    label = "ON"
                     icon = iconConnected
-                    label = profileName
                     state = Tile.STATE_ACTIVE
                 }
 
                 BaseService.State.Stopping -> {
-                    icon = iconBusy
+                    label = "STOPPING"
+                    icon = iconStopping
                     state = Tile.STATE_UNAVAILABLE
                 }
 
                 BaseService.State.Stopped -> {
+                    label = "OFF"
                     icon = iconIdle
                     state = Tile.STATE_INACTIVE
                 }
             }
 
-            label = label ?: getString(R.string.app_name)
             updateTile()
         }
     }

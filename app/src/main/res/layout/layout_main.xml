@@ -42,7 +42,7 @@
             app:maxImageSize="40dp"
             app:layout_anchor="@id/stats"
             app:pressedTranslationZ="6dp"
-            app:srcCompat="@drawable/ic_qinglin_eye_off" />
+            app:srcCompat="@drawable/ic_qinglin_off" />
 
         <io.nekohasekai.sagernet.widget.StatsBar
             android:id="@+id/stats"
