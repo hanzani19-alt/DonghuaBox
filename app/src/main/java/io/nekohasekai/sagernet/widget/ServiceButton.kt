@@ -73,15 +73,15 @@ class ServiceButton @JvmOverloads constructor(
                                 android.R.integer.config_mediumAnimTime
                             ) + 1000L
                         )
-                        isIndeterminate = true
-                        show()
+                        progress.isIndeterminate = true
+                        progress.show()
                     }
             }
 
             BaseService.State.Connected -> {
                 setImageResource(R.drawable.ic_medusa_cobra)
                 delayedAnimation?.cancel()
-                setProgressCompat(1, true)
+                progress.setProgressCompat(1, true)
             }
 
             BaseService.State.Stopping -> {
