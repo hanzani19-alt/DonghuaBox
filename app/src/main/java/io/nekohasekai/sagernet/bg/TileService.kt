@@ -13,15 +13,15 @@ import android.service.quicksettings.TileService as BaseTileService
 class TileService : BaseTileService(), SagerConnection.Callback {
 
     private val iconIdle by lazy {
-        Icon.createWithResource(this, R.drawable.ic_medusa_coiled)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_eye_off)
     }
 
     private val iconBusy by lazy {
-        Icon.createWithResource(this, R.drawable.ic_medusa_raised)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_eye_connecting)
     }
 
     private val iconConnected by lazy {
-        Icon.createWithResource(this, R.drawable.ic_medusa_cobra)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_eye_on)
     }
 
     private var tapPending = false
