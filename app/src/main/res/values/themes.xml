@@ -137,7 +137,7 @@
         <item name="colorPrimaryDark">@color/medusa_crimson_dark</item>
         <item name="colorAccent">@color/medusa_gold</item>
         <item name="colorMaterial100">@color/medusa_crimson_light</item>
-        <item name="colorMaterial300">@color/medusa_celestial_purple</item>
+        <item name="colorMaterial300">@color/medusa_crimson</item>
     </style>
 
     <style name="Theme.SagerNet.Pink_SSR" parent="Theme.SagerNet">
@@ -145,7 +145,7 @@
         <item name="colorPrimaryDark">@color/medusa_crimson_dark</item>
         <item name="colorAccent">@color/medusa_gold</item>
         <item name="colorMaterial100">@color/medusa_crimson_light</item>
-        <item name="colorMaterial300">@color/medusa_celestial_purple</item>
+        <item name="colorMaterial300">@color/medusa_crimson</item>
     </style>
 
     <style name="Theme.SagerNet.Amber">
