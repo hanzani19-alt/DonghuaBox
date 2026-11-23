@@ -50,7 +50,7 @@ class ServiceButton @JvmOverloads constructor(
             }
 
         fun start() {
-            setImageDrawable(icon)
+            setImageResource(R.drawable.ic_medusa_cobra)
             icon.start()
             progress.onStart()
         }
