@@ -11,16 +11,28 @@ import android.service.quicksettings.TileService as BaseTileService
 
 @RequiresApi(24)
 class TileService : BaseTileService(), SagerConnection.Callback {
-    private val iconIdle by lazy { Icon.createWithResource(this, R.drawable.ic_service_idle) }
-    private val iconBusy by lazy { Icon.createWithResource(this, R.drawable.ic_service_busy) }
-    private val iconConnected by lazy {
-        Icon.createWithResource(this, R.drawable.ic_service_active)
+
+    private val iconIdle by lazy {
+        Icon.createWithResource(this, R.drawable.ic_medusa_coiled)
     }
+
+    private val iconBusy by lazy {
+        Icon.createWithResource(this, R.drawable.ic_medusa_raised)
+    }
+
+    private val iconConnected by lazy {
+        Icon.createWithResource(this, R.drawable.ic_medusa_cobra)
+    }
+
     private var tapPending = false
 
     private val connection = SagerConnection(SagerConnection.CONNECTION_ID_TILE)
-    override fun stateChanged(state: BaseService.State, profileName: String?, msg: String?) =
-        updateTile(state, profileName)
+
+    override fun stateChanged(
+        state: BaseService.State,
+        profileName: String?,
+        msg: String?
+    ) = updateTile(state, profileName)
 
     override fun onServiceConnected(service: ISagerNetService) {
         updateTile(BaseService.State.values()[service.state], service.profileName)
@@ -49,11 +61,16 @@ class TileService : BaseTileService(), SagerConnection.Callback {
         if (isLocked) unlockAndRun(this::toggle) else toggle()
     }
 
-    private fun updateTile(serviceState: BaseService.State, profileName: String?) {
+    private fun updateTile(
+        serviceState: BaseService.State,
+        profileName: String?
+    ) {
         qsTile?.apply {
             label = null
+
             when (serviceState) {
                 BaseService.State.Idle -> error("serviceState")
+
                 BaseService.State.Connecting -> {
                     icon = iconBusy
                     state = Tile.STATE_ACTIVE
@@ -75,6 +92,7 @@ class TileService : BaseTileService(), SagerConnection.Callback {
                     state = Tile.STATE_INACTIVE
                 }
             }
+
             label = label ?: getString(R.string.app_name)
             updateTile()
         }
@@ -82,11 +100,14 @@ class TileService : BaseTileService(), SagerConnection.Callback {
 
     private fun toggle() {
         val service = connection.service
-        if (service == null) tapPending =
-            true else BaseService.State.values()[service.state].let { state ->
-            when {
-                state.canStop -> SagerNet.stopService()
-                state == BaseService.State.Stopped -> SagerNet.startService()
+        if (service == null) {
+            tapPending = true
+        } else {
+            BaseService.State.values()[service.state].let { state ->
+                when {
+                    state.canStop -> SagerNet.stopService()
+                    state == BaseService.State.Stopped -> SagerNet.startService()
+                }
             }
         }
     }
