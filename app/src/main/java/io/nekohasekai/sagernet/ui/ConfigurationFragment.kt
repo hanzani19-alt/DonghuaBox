@@ -55,6 +55,7 @@ import io.nekohasekai.sagernet.databinding.LayoutProfileListBinding
 import io.nekohasekai.sagernet.databinding.LayoutProgressListBinding
 import io.nekohasekai.sagernet.fmt.AbstractBean
 import io.nekohasekai.sagernet.fmt.toUniversalLink
+import io.nekohasekai.sagernet.fmt.toProtectedUniversalLink
 import io.nekohasekai.sagernet.group.GroupUpdater
 import io.nekohasekai.sagernet.group.RawUpdater
 import io.nekohasekai.sagernet.ktx.FixedLinearLayoutManager
@@ -355,6 +356,14 @@ class ConfigurationFragment @JvmOverloads constructor(
                     snackbar(getString(R.string.clipboard_empty)).show()
                 } else runOnDefaultDispatcher {
                     try {
+                        val clipboardText = text.trim()
+                        if (clipboardText.startsWith("sn://protect?")) {
+                            (requireActivity() as MainActivity).importProfile(
+                                clipboardText.toUri()
+                            )
+                            return@runOnDefaultDispatcher
+                        }
+
                         val proxies = RawUpdater.parseRaw(text)
                         if (proxies.isNullOrEmpty()) onMainDispatcher {
                             snackbar(getString(R.string.no_proxies_found_in_clipboard)).show()
@@ -1528,7 +1537,11 @@ class ConfigurationFragment @JvmOverloads constructor(
                 }
 
                 profileName.text = proxyEntity.displayName()
-                profileType.text = proxyEntity.displayType()
+                profileType.text = if (proxyEntity.locked) {
+                    "${proxyEntity.displayType()} · Locked"
+                } else {
+                    proxyEntity.displayType()
+                }
                 profileType.setTextColor(requireContext().getProtocolColor(proxyEntity.type))
 
                 var rx = proxyEntity.rx
@@ -1608,8 +1621,8 @@ class ConfigurationFragment @JvmOverloads constructor(
                 }
 
                 val selectOrChain = select || proxyEntity.type == ProxyEntity.TYPE_CHAIN
-                shareLayout.isGone = selectOrChain
-                editButton.isGone = select
+                shareLayout.isGone = selectOrChain || proxyEntity.locked
+                editButton.isGone = select || proxyEntity.locked
                 removeButton.isGone = select
 
                 proxyEntity.nekoBean?.apply {
@@ -1680,6 +1693,10 @@ class ConfigurationFragment @JvmOverloads constructor(
             }
 
             override fun onMenuItemClick(item: MenuItem): Boolean {
+                if (entity.locked) {
+                    (activity as MainActivity).snackbar("Profil Locked tidak dapat diekspor").show()
+                    return true
+                }
                 try {
                     currentName = entity.displayName()!!
                     when (item.itemId) {
@@ -1688,6 +1705,12 @@ class ConfigurationFragment @JvmOverloads constructor(
                         R.id.action_universal_qr -> showCode(entity.requireBean().toUniversalLink())
                         R.id.action_universal_clipboard -> export(
                             entity.requireBean().toUniversalLink()
+                        )
+                        R.id.action_protect_qr -> showCode(
+                            entity.requireBean().toProtectedUniversalLink()
+                        )
+                        R.id.action_protect_clipboard -> export(
+                            entity.requireBean().toProtectedUniversalLink()
                         )
 
                         R.id.action_config_export_clipboard -> export(entity.exportConfig().first)

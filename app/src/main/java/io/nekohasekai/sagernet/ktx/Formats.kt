@@ -115,7 +115,11 @@ suspend fun parseProxies(text: String): List<AbstractBean> {
             throw SubscriptionFoundException(this)
         }
 
-        if (startsWith("sn://")) {
+        if (startsWith("sn://protect?")) {
+            throw IllegalArgumentException(
+                "SN Link Protect must be imported directly, not as a subscription"
+            )
+        } else if (startsWith("sn://")) {
             Logs.d("Try parse universal link: $this")
             runCatching {
                 entities.add(parseUniversal(this))

@@ -37,6 +37,7 @@ import io.nekohasekai.sagernet.database.preference.OnPreferenceDataStoreChangeLi
 import io.nekohasekai.sagernet.databinding.LayoutMainBinding
 import io.nekohasekai.sagernet.fmt.AbstractBean
 import io.nekohasekai.sagernet.fmt.KryoConverters
+import io.nekohasekai.sagernet.fmt.parseProtectedUniversal
 import io.nekohasekai.sagernet.fmt.PluginEntry
 import io.nekohasekai.sagernet.group.GroupInterfaceAdapter
 import io.nekohasekai.sagernet.group.GroupUpdater
@@ -213,8 +214,14 @@ class MainActivity : ThemedActivity(),
     }
 
     suspend fun importProfile(uri: Uri) {
-        val profile = try {
-            parseProxies(uri.toString()).getOrNull(0) ?: error(getString(R.string.no_proxies_found))
+        val (profile, locked) = try {
+            val link = uri.toString()
+            if (link.startsWith("sn://protect?")) {
+                parseProtectedUniversal(link) to true
+            } else {
+                (parseProxies(link).getOrNull(0)
+                    ?: error(getString(R.string.no_proxies_found))) to false
+            }
         } catch (e: Exception) {
             onMainDispatcher {
                 alert(e.readableMessage).show()
@@ -227,23 +234,21 @@ class MainActivity : ThemedActivity(),
                 .setMessage(getString(R.string.profile_import_message, profile.displayName()))
                 .setPositiveButton(R.string.yes) { _, _ ->
                     runOnDefaultDispatcher {
-                        finishImportProfile(profile)
+                        finishImportProfile(profile, locked)
                     }
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
         }
-
     }
 
-    private suspend fun finishImportProfile(profile: AbstractBean) {
+    private suspend fun finishImportProfile(profile: AbstractBean, locked: Boolean) {
         val targetId = DataStore.selectedGroupForImport()
 
-        ProfileManager.createProfile(targetId, profile)
+        ProfileManager.createProfile(targetId, profile, locked)
 
         onMainDispatcher {
             displayFragmentWithId(R.id.nav_configuration)
-
             snackbar(resources.getQuantityString(R.plurals.added, 1, 1)).show()
         }
     }

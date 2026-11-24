@@ -72,11 +72,16 @@ object ProfileManager {
         }
     }
 
-    suspend fun createProfile(groupId: Long, bean: AbstractBean): ProxyEntity {
+    suspend fun createProfile(
+        groupId: Long,
+        bean: AbstractBean,
+        locked: Boolean = false
+    ): ProxyEntity {
         bean.applyDefaultValues()
 
         val profile = ProxyEntity(groupId = groupId).apply {
             id = 0
+            this.locked = locked
             putBean(bean)
             userOrder = SagerDatabase.proxyDao.nextOrder(groupId) ?: 1
         }

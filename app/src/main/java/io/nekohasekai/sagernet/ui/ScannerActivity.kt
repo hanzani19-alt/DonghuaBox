@@ -119,6 +119,16 @@ class ScannerActivity : ThemedActivity(),
         runOnDefaultDispatcher {
             try {
                 val text = result?.text ?: throw Exception("QR code not found")
+                val qrText = text.trim()
+
+                if (qrText.startsWith("sn://protect?")) {
+                    startActivity(Intent(this@ScannerActivity, MainActivity::class.java).apply {
+                        action = Intent.ACTION_VIEW
+                        data = qrText.toUri()
+                    })
+                    return@runOnDefaultDispatcher
+                }
+
                 val results = RawUpdater.parseRaw(text)
                 if (!results.isNullOrEmpty()) {
                     val currentGroupId = DataStore.selectedGroupForImport()
