@@ -215,7 +215,17 @@ class MainActivity : ThemedActivity(),
 
     suspend fun importProfile(uri: Uri) {
         val (profile, locked) = try {
-            val link = uri.toString()
+            val link = if (uri.scheme == "content") {
+                val content = contentResolver.openInputStream(uri)
+                    ?.bufferedReader(Charsets.UTF_8)?.use { it.readText().trim() }
+                    ?: error("Tidak dapat membaca file Protected")
+                if (!content.startsWith("sn://protect?")) {
+                    error("File bukan Protected File DonghuaBox")
+                }
+                content
+            } else {
+                uri.toString()
+            }
             if (link.startsWith("sn://protect?")) {
                 parseProtectedUniversal(link) to true
             } else {

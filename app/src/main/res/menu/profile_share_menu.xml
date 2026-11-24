@@ -43,6 +43,9 @@
             <item
                 android:id="@+id/action_config_export_file"
                 android:title="@string/action_export_file" />
+            <item
+                android:id="@+id/action_config_export_protected_file"
+                android:title="@string/action_export_protected_file" />
         </menu>
     </item>
 

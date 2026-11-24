@@ -133,6 +133,7 @@ class ConfigurationFragment @JvmOverloads constructor(
     lateinit var groupPager: ViewPager2
 
     val alwaysShowAddress by lazy { DataStore.alwaysShowAddress }
+    private var protectedFileContent: String = ""
 
     fun getCurrentGroupFragment(): GroupFragment? {
         return try {
@@ -1714,6 +1715,19 @@ class ConfigurationFragment @JvmOverloads constructor(
                         )
 
                         R.id.action_config_export_clipboard -> export(entity.exportConfig().first)
+                        R.id.action_config_export_protected_file -> {
+                            val fragment = parentFragment as ConfigurationFragment
+                            fragment.protectedFileContent =
+                                entity.requireBean().toProtectedUniversalLink()
+                            val fileName = currentName
+                                .replace(Regex("""[\\/:*?"<>|]"""), "_")
+                                .trim()
+                                .ifBlank { "DonghuaBox" }
+                            startFilesForResult(
+                                fragment.exportProtectedFile,
+                                "$fileName.snprotect"
+                            )
+                        }
                         R.id.action_config_export_file -> {
                             val cfg = entity.exportConfig()
                             DataStore.serverConfig = cfg.first
@@ -1753,6 +1767,29 @@ class ConfigurationFragment @JvmOverloads constructor(
                         }
                     }
 
+                }
+            }
+        }
+
+    private val exportProtectedFile =
+        registerForActivityResult(ActivityResultContracts.CreateDocument("application/vnd.donghuabox.snprotect")) { data ->
+            if (data != null) {
+                runOnDefaultDispatcher {
+                    try {
+                        (requireActivity() as MainActivity).contentResolver.openOutputStream(data)!!
+                            .bufferedWriter(Charsets.UTF_8)
+                            .use {
+                                it.write(protectedFileContent)
+                            }
+                        onMainDispatcher {
+                            snackbar(getString(R.string.action_export_msg)).show()
+                        }
+                    } catch (e: Exception) {
+                        Logs.w(e)
+                        onMainDispatcher {
+                            snackbar(e.readableMessage).show()
+                        }
+                    }
                 }
             }
         }
