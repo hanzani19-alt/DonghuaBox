@@ -55,6 +55,20 @@ class ServiceNotification(
 
     var listenPostSpeed = true
 
+    private fun iconForState(state: BaseService.State): Int = when (state) {
+        BaseService.State.Connecting -> R.drawable.ic_qinglin_connecting
+        BaseService.State.Connected -> R.drawable.ic_qinglin_on
+        BaseService.State.Stopping -> R.drawable.ic_qinglin_stopping
+        else -> R.drawable.ic_qinglin_off
+    }
+
+    suspend fun postNotificationState(state: BaseService.State) {
+        useBuilder {
+            it.setSmallIcon(iconForState(state))
+        }
+        update()
+    }
+
     suspend fun postNotificationSpeedUpdate(stats: SpeedDisplayData) {
         useBuilder {
             if (showDirectSpeed) {
@@ -118,7 +132,7 @@ class ServiceNotification(
         .setContentTitle(title)
         .setOnlyAlertOnce(true)
         .setContentIntent(SagerNet.configureIntent(service))
-        .setSmallIcon(R.drawable.ic_service_active)
+        .setSmallIcon(iconForState(service.data.state))
         .setCategory(NotificationCompat.CATEGORY_SERVICE)
         .setPriority(if (visible) NotificationCompat.PRIORITY_LOW else NotificationCompat.PRIORITY_MIN)
 

@@ -86,6 +86,9 @@ class BaseService {
             state = s
             DataStore.serviceState = s
             binder.stateChanged(s, msg)
+            binder.launch {
+                notification?.postNotificationState(s)
+            }
         }
     }
 
