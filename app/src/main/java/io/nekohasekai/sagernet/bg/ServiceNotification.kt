@@ -56,10 +56,10 @@ class ServiceNotification(
     var listenPostSpeed = true
 
     private fun iconForState(state: BaseService.State): Int = when (state) {
-        BaseService.State.Connecting -> R.drawable.ic_qinglin_connecting
-        BaseService.State.Connected -> R.drawable.ic_qinglin_on
-        BaseService.State.Stopping -> R.drawable.ic_qinglin_stopping
-        else -> R.drawable.ic_qinglin_off
+        BaseService.State.Connecting -> R.drawable.ic_status_connecting
+        BaseService.State.Connected -> R.drawable.ic_status_dragon
+        BaseService.State.Stopping -> R.drawable.ic_status_stopping
+        else -> R.drawable.ic_status_phoenix
     }
 
     suspend fun postNotificationState(state: BaseService.State) {
