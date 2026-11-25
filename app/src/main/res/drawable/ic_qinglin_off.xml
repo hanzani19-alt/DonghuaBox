@@ -3,16 +3,54 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
-    <path android:fillColor="#FFFFFFFF"
-        android:pathData="M24,18 C20,13 17,7 9,5 C12,10 10,12 4,11 C9,15 8,19 3,22 C10,22 14,20 19,26 C15,25 11,26 7,31 C13,29 17,31 21,34 L24,30 Z"/>
-    <path android:fillColor="#FFFFFFFF"
-        android:pathData="M24,18 C28,13 31,7 39,5 C36,10 38,12 44,11 C39,15 40,19 45,22 C38,22 34,20 29,26 C33,25 37,26 41,31 C35,29 31,31 27,34 L24,30 Z"/>
-    <path android:fillColor="#FFFFFFFF"
-        android:pathData="M24,9 C21,5 22,3 24,2 C27,5 27,8 25,11 C29,10 31,12 31,15 C29,18 26,18 24,16 C22,18 19,18 17,15 C17,12 20,10 24,9 Z"/>
-    <path android:fillColor="#FFFFFFFF"
-        android:pathData="M21,18 C22,22 20,27 17,31 C20,30 22,29 24,26 C26,29 28,30 31,31 C28,27 26,22 27,18 C25,20 23,20 21,18 Z"/>
-    <path android:fillColor="#FFFFFFFF"
-        android:pathData="M22,29 C17,34 13,37 11,43 C17,41 21,38 24,34 C27,38 31,41 37,43 C35,37 31,34 26,29 L24,35 Z"/>
-    <path android:fillColor="#FFFFFFFF"
-        android:pathData="M18,25 C14,23 11,23 8,25 C12,25 14,28 16,30 Z M30,25 C34,23 37,23 40,25 C36,25 34,28 32,30 Z"/>
+
+    <!-- Four outer lotus petals -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M24,3 C20,8 16,14 17,19 C18,23 21,25 24,27 C27,25 30,23 31,19 C32,14 28,8 24,3 Z"/>
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M45,24 C40,20 34,16 29,17 C25,18 23,21 21,24 C23,27 25,30 29,31 C34,32 40,28 45,24 Z"/>
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M24,45 C28,40 32,34 31,29 C30,25 27,23 24,21 C21,23 18,25 17,29 C16,34 20,40 24,45 Z"/>
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M3,24 C8,28 14,32 19,31 C23,30 25,27 27,24 C25,21 23,18 19,17 C14,16 8,20 3,24 Z"/>
+
+    <!-- Inner curved petal lines -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M24,4 C23,12 21,17 17,20 M24,4 C25,12 27,17 31,20 M44,24 C36,23 31,21 28,17 M44,24 C36,25 31,27 28,31 M24,44 C25,36 27,31 31,28 M24,44 C23,36 21,31 17,28 M4,24 C12,25 17,27 20,31 M4,24 C12,23 17,21 20,17"/>
+
+    <!-- Center circle -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.8"
+        android:pathData="M24,20.5 A3.5,3.5 0,1 0,24 27.5 A3.5,3.5 0,1 0,24 20.5 Z"/>
+
 </vector>
