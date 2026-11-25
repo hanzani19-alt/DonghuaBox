@@ -17,7 +17,7 @@ class TileService : BaseTileService(), SagerConnection.Callback {
     }
 
     private val iconBusy by lazy {
-        Icon.createWithResource(this, R.drawable.ic_qinglin_connecting)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_off)
     }
 
     private val iconConnected by lazy {
@@ -25,7 +25,7 @@ class TileService : BaseTileService(), SagerConnection.Callback {
     }
 
     private val iconStopping by lazy {
-        Icon.createWithResource(this, R.drawable.ic_qinglin_stopping)
+        Icon.createWithResource(this, R.drawable.ic_qinglin_on)
     }
 
     private var tapPending = false
