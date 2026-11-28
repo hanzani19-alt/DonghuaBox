@@ -481,6 +481,19 @@
     <string name="stun_attest_loading">This may take a few minutes…</string>
     <string name="nat_stun_server_hint">Stun server</string>
     <string name="nat_result_hint">NAT check result</string>
+    <string name="proxy_assistant">Proxy Assistant</string>
+    <string name="proxy_assistant_status">Proxy server information</string>
+    <string name="proxy_assistant_not_ready">Hotspot address detection is not available yet</string>
+    <string name="proxy_checking_hotspot">Checking hotspot interface…</string>
+    <string name="proxy_server_address">Server address</string>
+    <string name="proxy_server_port">Proxy port</string>
+    <string name="proxy_copy_address">Copy address</string>
+    <string name="proxy_copy_port">Copy port</string>
+    <string name="proxy_guide_title">Device setup guides</string>
+    <string name="proxy_guide_android">Android guide</string>
+    <string name="proxy_guide_ios">iPhone guide</string>
+    <string name="proxy_guide_windows">Windows guide</string>
+    <string name="proxy_limitations">Manual proxy settings are not supported by every app or network protocol. Some traffic, including UDP and certain DNS traffic, may not use this proxy. This is not a guaranteed full-device VPN connection.</string>
     <string name="tools_network">Network</string>
     <string name="mtu" translatable="false">MTU</string>
 

@@ -34,12 +34,22 @@ class VpnService : BaseVpnService(),
     var conn: ParcelFileDescriptor? = null
 
     private var metered = false
+    private var hotspotProxyRelay: HotspotProxyRelay? = null
 
     override var upstreamInterfaceName: String? = null
 
     override suspend fun startProcesses() {
         DataStore.vpnService = this
         super.startProcesses() // launch proxy instance
+
+        try {
+            if (hotspotProxyRelay == null) {
+                hotspotProxyRelay = HotspotProxyRelay(this)
+            }
+            hotspotProxyRelay?.start()
+        } catch (e: Exception) {
+            Logs.w("Proxy Assistant failed to start: ${e.message}")
+        }
     }
 
     override var wakeLock: PowerManager.WakeLock? = null
@@ -52,6 +62,13 @@ class VpnService : BaseVpnService(),
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override fun killProcesses() {
+        try {
+            hotspotProxyRelay?.stop()
+        } catch (e: Exception) {
+            Logs.w("Proxy Assistant failed to stop: ${e.message}")
+        }
+        hotspotProxyRelay = null
+
         conn?.close()
         conn = null
         super.killProcesses()

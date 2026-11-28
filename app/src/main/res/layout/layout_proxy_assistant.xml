@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proxy_assistant_status"
+            android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+        <TextView
+            android:id="@+id/proxy_server_address_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/proxy_server_address"
+            android:textAppearance="?attr/textAppearanceSubtitle2" />
+
+        <TextView
+            android:id="@+id/proxy_server_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proxy_assistant_not_ready"
+            android:textIsSelectable="true"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/proxy_interface_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/proxy_checking_hotspot"
+            android:textIsSelectable="true" />
+
+        <Button
+            android:id="@+id/proxy_copy_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proxy_copy_address" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/proxy_server_port"
+            android:textAppearance="?attr/textAppearanceSubtitle2" />
+
+        <TextView
+            android:id="@+id/proxy_server_port"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textIsSelectable="true" />
+
+        <Button
+            android:id="@+id/proxy_copy_port"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proxy_copy_port" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/proxy_guide_title"
+            android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+        <Button
+            android:id="@+id/proxy_guide_android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proxy_guide_android" />
+
+        <Button
+            android:id="@+id/proxy_guide_ios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proxy_guide_ios" />
+
+        <Button
+            android:id="@+id/proxy_guide_windows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proxy_guide_windows" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/proxy_limitations"
+            android:textColor="?android:textColorTertiary"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</ScrollView>

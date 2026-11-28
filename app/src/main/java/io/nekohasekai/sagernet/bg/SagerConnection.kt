@@ -43,6 +43,7 @@ class SagerConnection(
         fun cbSpeedUpdate(stats: SpeedDisplayData) {}
         fun cbTrafficUpdate(data: TrafficData) {}
         fun cbSelectorUpdate(id: Long) {}
+        fun proxyAssistantChanged(active: Boolean, address: String?, port: Int, message: String?) {}
 
         fun stateChanged(state: BaseService.State, profileName: String?, msg: String?)
 
@@ -90,6 +91,13 @@ class SagerConnection(
             val callback = callback ?: return
             runOnMainDispatcher {
                 callback.cbSelectorUpdate(id)
+            }
+        }
+
+        override fun proxyAssistantChanged(active: Boolean, address: String?, port: Int, message: String?) {
+            val callback = callback ?: return
+            runOnMainDispatcher {
+                callback.proxyAssistantChanged(active, address, port, message)
             }
         }
 

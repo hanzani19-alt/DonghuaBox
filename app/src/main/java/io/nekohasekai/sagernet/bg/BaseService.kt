@@ -116,9 +116,54 @@ class BaseService {
                 callbacks.register(cb)
             }
             callbackIdMap[cb] = id
+            val status = synchronized(proxyAssistantLock) {
+                ProxyAssistantStatus(
+                    proxyAssistantActive,
+                    proxyAssistantAddress,
+                    proxyAssistantPort,
+                    proxyAssistantMessage
+                )
+            }
+            try {
+                cb.proxyAssistantChanged(
+                    status.active,
+                    status.address,
+                    status.port,
+                    status.message
+                )
+            } catch (_: RemoteException) {
+            }
         }
 
         private val broadcastMutex = Mutex()
+        private val proxyAssistantLock = Any()
+
+        private data class ProxyAssistantStatus(
+            val active: Boolean,
+            val address: String?,
+            val port: Int,
+            val message: String?
+        )
+
+        private var proxyAssistantActive = false
+        private var proxyAssistantAddress: String? = null
+        private var proxyAssistantPort = 2081
+        private var proxyAssistantMessage: String? = null
+
+        fun proxyAssistantChanged(active: Boolean, address: String?, port: Int, message: String?) {
+            synchronized(proxyAssistantLock) {
+                proxyAssistantActive = active
+                proxyAssistantAddress = address
+                proxyAssistantPort = port
+                proxyAssistantMessage = message
+            }
+
+            launch {
+                broadcast {
+                    it.proxyAssistantChanged(active, address, port, message)
+                }
+            }
+        }
 
         suspend fun broadcast(work: (ISagerNetServiceCallback) -> Unit) {
             broadcastMutex.withLock {
